@@ -1,9 +1,7 @@
 package com.uday.api.bookws.user;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "USERS")
@@ -18,6 +16,11 @@ public class UserEntity {
 
     @Column(name = "Enabled")
     private boolean enabled;
+
+    @OneToMany(mappedBy = "userEntity",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+    private Set<AuthoritiesEntity> authoritiesEntities;
 
     public UserEntity() {
     }
@@ -50,5 +53,13 @@ public class UserEntity {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Set<AuthoritiesEntity> getAuthoritiesEntities() {
+        return authoritiesEntities;
+    }
+
+    public void setAuthoritiesEntities(Set<AuthoritiesEntity> authoritiesEntities) {
+        this.authoritiesEntities = authoritiesEntities;
     }
 }

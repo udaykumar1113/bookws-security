@@ -1,6 +1,9 @@
 package com.uday.api.bookws.user;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -23,6 +26,10 @@ public class UserService {
 
     private User createUserFromUserEntity(UserEntity ue) {
 
-        return new User(ue.getUsername(), ue.getPassword(), ue.isEnabled());
+        User user = new User(ue.getUsername(), ue.getPassword(), ue.isEnabled());
+        user.setAuthorities(ue.getAuthoritiesEntities().stream()
+                .map(ae -> new SimpleGrantedAuthority(ae.getAuthority()))
+                .collect(Collectors.toSet()));
+        return user;
     }
 }
