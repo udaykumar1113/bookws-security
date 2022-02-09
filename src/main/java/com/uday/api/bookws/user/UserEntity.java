@@ -17,11 +17,6 @@ public class UserEntity {
     @Column(name = "Enabled")
     private boolean enabled;
 
-    @OneToMany(mappedBy = "userEntity",
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
-    private Set<AuthoritiesEntity> authoritiesEntities;
-
     public UserEntity() {
     }
 
@@ -30,6 +25,11 @@ public class UserEntity {
         this.password = password;
         this.enabled = enabled;
     }
+
+    @OneToMany(mappedBy = "userEntity",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+    private Set<UserRoleEntity> userRoleEntities;
 
     public String getUsername() {
         return username;
@@ -55,11 +55,11 @@ public class UserEntity {
         this.enabled = enabled;
     }
 
-    public Set<AuthoritiesEntity> getAuthoritiesEntities() {
-        return authoritiesEntities;
+    public Set<UserRoleEntity> getUserRoleEntities() {
+        return userRoleEntities;
     }
 
-    public void setAuthoritiesEntities(Set<AuthoritiesEntity> authoritiesEntities) {
-        this.authoritiesEntities = authoritiesEntities;
+    public void setUserRoleEntities(Set<UserRoleEntity> userRoleEntities) {
+        this.userRoleEntities = userRoleEntities;
     }
 }

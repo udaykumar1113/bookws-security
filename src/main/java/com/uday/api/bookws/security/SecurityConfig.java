@@ -27,8 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/v1/books/{bookId}").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers("/v1/books").hasAuthority("ADMIN")
+                //.antMatchers("/v1/books/{bookId}").hasAnyAuthority("USER", "ADMIN")
+                //.antMatchers("/v1/books").hasAuthority("ADMIN")
+                .antMatchers("/v1/books/{bookId}").access("hasRole('USER') and hasAuthority('GET_BOOK')")
+                .antMatchers("/v1/books").access("hasRole('ADMIN') and hasAuthority('CREATE_BOOK')")
                 .anyRequest().authenticated()
                 .and().httpBasic()
                 .authenticationEntryPoint(authenticationEntryPoint);
